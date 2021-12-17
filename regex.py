@@ -1,48 +1,58 @@
 import re
 
-Airmaticoperator = ['+', '-', '*', '/', '%']
-Compoundoperator = ['+=', '-=', '*=', '/=', '%=']
-AssignOP = ['=']
+MDM = ['*', '/', '%']
+PM = ['+', '-']
+AS_Operator = ['+=', '-=', '*=', '/=', '%=', '=']
 incdecOP = ['++', '--']
 logicalOp = ['&&', '||', '!']
 relationalOP = ['<', '>', '<=', '>=', '!=', '==']
 punctuator = [',', ';', '(', ')', '{', '}', '[', ']', ':', '?']
+Data_Types = ['int', 'string', 'float', 'char', 'bool']
+Access_Modifier = ['public', 'private', 'protected']
 
 
 def is_keyword(str):
-    keyword = ["return", "false", "none", "break", "from", "in", "global",
-               "while", "for", "with", "class", "if", "else", "elif",
-               "as", "try", "except", "raise", "finally", "continue"]
+    keyword = ["return", "false", "break", "while", "for", "class", "if",
+               "else", "try", "except", "finally", "continue", "def", "print", "true", "extends", "this", "super", "new", "do", "static"]
     if str in keyword:
-        return ('Is Keyword')
-    elif str in Airmaticoperator:
-        return ('Is Airthmatic operator')
+        return (str)
+    elif str in MDM:
+        return ('MDM')
+    elif str in Data_Types:
+        return ('DT')
+    elif str in Access_Modifier:
+        return ('AM')
+    elif str in PM:
+        return ('PM')
     elif str in relationalOP:
-        return ('Is Relational operator')
+        return ('RO')
     elif str in logicalOp:
-        return ('Is Logical operator')
+        return ('LO')
     elif str in incdecOP:
-        return ('Is Inc Dec operator')
+        return ('INCDEC')
     elif str in punctuator:
-        return ('Is punctuator')
-    elif str in AssignOP:
-        return ('Is Assignment operator')
-    elif str in Compoundoperator:
-        return ('Is compound operator')
+        return ('PN')
+    elif str in AS_Operator:
+        return ('ASO')
     elif re.fullmatch("(^[^\d\W]\w*\Z)", str):
-        return ('Is Identifier')
+        return ('ID')
     elif(re.fullmatch("([+|-][0-9]+)|([0-9]+)", str)):
-        return ("Is Int Constatnt")
+        return ("IC")
     elif(re.fullmatch("([+|-][0-9]*[.][0-9]+)|([0-9]*[.][0-9]+)", str)):
-        return ("Is Float Constatnt")
+        return ("FC")
     elif(re.fullmatch("[\w\W]", str)):
-        return ("Is Char Constatnt")
-    # elif (re.fullmatch("[\"][\w\W]*", str)):
-    #     return ("Is String Constatnt")
+        return ("CC")
     elif (re.fullmatch("[\"][\w\W]*[\"]", str)):
-        return ("Is String Constatnt")
+        return ("SC")
     else:
         return "invalid lexeme"
+
+
+#AssignOP = ['=']
+# elif (re.fullmatch("[\"][\w\W]*", str)):
+    #     return ("Is String Constatnt")
+# elif str in AssignOP:
+    #     return ('ASO')
 
 
 # def Is_Identifier(string):
