@@ -9,7 +9,7 @@ classPart = []
 ValuePart = []
 line = []
 
-Qotation = addFlag = equalFlag = minusFlag = multiplyFlag = divideFlag = scommentFlag = mcommentFlag = moduloFlag = lessthanFlag = notFlag = greaterthanFlag = orFlag = dotFlag = AndFlag = False
+Qotation = addFlag = equalFlag = minusFlag = multiplyFlag = divideFlag = mcommentFlag = moduloFlag = lessthanFlag = notFlag = greaterthanFlag = orFlag = dotFlag = AndFlag = False
 
 qoutationCount = addCount = equalCount = minusCount = AndCount = orCount = mcommentCount = last_line = 0
 
@@ -42,10 +42,13 @@ def Printing():
     temp = ""
     print(df)
 
+    # for ind in df.index:
+    #     print(df['classPart'][ind])
+
 
 def wordCount(file):
 
-    global lineNo, temp, Qotation, qoutationCount, addCount, equalCount, addFlag, equalFlag, minusCount, minusFlag, multiplyFlag, moduloFlag, divideFlag, notFlag, greaterthanFlag, lessthanFlag, char, AndCount, AndFlag, orCount, orFlag, dotFlag, dotTemp, dotTemp1, dot, scommentFlag, mcommentFlag, mcommentCount, last_line, qotationTemp
+    global lineNo, temp, Qotation, qoutationCount, addCount, equalCount, addFlag, equalFlag, minusCount, minusFlag, multiplyFlag, moduloFlag, divideFlag, notFlag, greaterthanFlag, lessthanFlag, char, AndCount, AndFlag, orCount, orFlag, dotFlag, dotTemp, dotTemp1, dot, mcommentFlag, mcommentCount, last_line, qotationTemp
 
     punctuator = [',', ';', '(', ')', '{', '}', '[', ']', ':', '?']
     operator = ['*', '/', '%', '!', '<', '>']
@@ -62,30 +65,13 @@ def wordCount(file):
                         lineNo += 1
                         addFlag = equalFlag = minusFlag = multiplyFlag = divideFlag = moduloFlag = lessthanFlag = notFlag = greaterthanFlag = orFlag = dotFlag = AndFlag = False
                     else:
-                        scommentFlag = False
                         temp = ""
                         char = ""
                         lineNo += 1
                 elif char == "\n" and mcommentFlag == True:
                     lineNo += 1
 
-                # if single comment hash is found
-                if char == "#" and mcommentFlag == True:
-                    pass
-                elif char == "#" and Qotation == True:
-                    pass
-                elif char == '#':
-                    if temp != '':
-                        printWord(temp)
-                        temp = ''
-                        char = ''
-                    scommentFlag = True
-                    char = ""
-
-                # if multiple comment is found
-                if char == "~" and scommentFlag == True:
-                    char = ""
-                elif char == "~" and Qotation == True:
+                if char == "~" and Qotation == True:
                     pass
                 elif char == "~":
                     mcommentCount += 1
@@ -103,8 +89,6 @@ def wordCount(file):
                 # space condition
                 if char == " " and Qotation == True:
                     pass
-                elif char == " " and scommentFlag == True:
-                    char = ""
                 elif char == " " and mcommentFlag == True:
                     pass
                 elif char == " ":
@@ -117,8 +101,6 @@ def wordCount(file):
 
                 if char in punctuator and Qotation == True:
                     pass
-                elif char in punctuator and scommentFlag == True:
-                    char = ""
                 elif char in punctuator and mcommentFlag == True:
                     pass
                 elif char in punctuator:
@@ -129,8 +111,6 @@ def wordCount(file):
                     temp = ""
                     char = ""
 
-                if char == "\"" and scommentFlag == True:
-                    char = ""
                 elif char == "\"" and mcommentFlag == True:
                     pass
                 elif char == "\"":
@@ -160,8 +140,6 @@ def wordCount(file):
                 # addition condition
                 if char == "+" and Qotation == True:
                     pass
-                elif char == "+" and scommentFlag == True:
-                    char = ""
                 elif char == "+" and mcommentFlag == True:
                     pass
                 elif char == "+":
@@ -179,8 +157,6 @@ def wordCount(file):
                 # minus condition
                 if char == "-" and Qotation == True:
                     pass
-                elif char == "-" and scommentFlag == True:
-                    char = ""
                 elif char == "-" and mcommentFlag == True:
                     pass
                 elif char == "-":
@@ -197,8 +173,6 @@ def wordCount(file):
 
                 if temp in PlusMinus and char == "=" and Qotation == True:
                     pass
-                elif temp in PlusMinus and char == "=" and scommentFlag == True:
-                    char = ""
                 elif temp in PlusMinus and char == "=" and mcommentFlag == True:
                     pass
                 elif temp in PlusMinus and char == "=":
@@ -212,8 +186,6 @@ def wordCount(file):
 
                 if temp in PlusMinus and char != "" and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) and Qotation == True:
                     pass
-                elif temp in PlusMinus and char != "" and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) and scommentFlag == True:
-                    char = ""
                 elif temp in PlusMinus and char != "" and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) and mcommentFlag == True:
                     pass
                 elif temp in PlusMinus and char != "" and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) == False:
@@ -226,8 +198,6 @@ def wordCount(file):
 
                 if temp in PlusMinus and char != "=" and Qotation == True and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) == False:
                     pass
-                elif temp in PlusMinus and char != "=" and scommentFlag == True and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) == False:
-                    char = ""
                 elif temp in PlusMinus and char != "=" and mcommentFlag == True and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) == False:
                     pass
                 elif temp in PlusMinus and char != "=" and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) == False:
@@ -240,8 +210,6 @@ def wordCount(file):
                 # operator conditions
                 if char in operator and Qotation == True:
                     pass
-                elif char in operator and scommentFlag == True:
-                    char = ""
                 elif char in operator and mcommentFlag == True:
                     pass
                 elif char in operator:
@@ -266,8 +234,6 @@ def wordCount(file):
 
                 if temp in operator and char == "=" and Qotation == True:
                     pass
-                elif temp in operator and char == "=" and scommentFlag == True:
-                    char = ""
                 elif temp in operator and char == "=" and mcommentFlag == True:
                     pass
                 elif temp in operator and char == "=":
@@ -278,8 +244,6 @@ def wordCount(file):
 
                 if temp in operator and char != "=" and Qotation == True:
                     pass
-                elif temp in operator and char != "=" and scommentFlag == True:
-                    char = ""
                 elif temp in operator and char != "=" and mcommentFlag == True:
                     pass
                 elif temp in operator and char != "=":
@@ -289,8 +253,6 @@ def wordCount(file):
                 # && condition
                 if char == "&" and Qotation == True:
                     pass
-                elif char == "&" and scommentFlag == True:
-                    char = ""
                 elif char == "&" and mcommentFlag == True:
                     pass
                 elif char == "&":
@@ -308,8 +270,6 @@ def wordCount(file):
                 # || condition
                 if char == "|" and Qotation == True:
                     pass
-                elif char == "|" and scommentFlag == True:
-                    char = ""
                 elif char == "|" and mcommentFlag == True:
                     pass
                 elif char == "|":
@@ -327,8 +287,6 @@ def wordCount(file):
                 # dot condition
                 if char == "." and Qotation == True:
                     pass
-                elif char == "." and scommentFlag == True:
-                    char = ""
                 elif char == "." and mcommentFlag == True:
                     pass
                 elif char == ".":
@@ -351,8 +309,6 @@ def wordCount(file):
 
                 if dotFlag == True and Qotation == True:
                     pass
-                elif dotFlag == True and scommentFlag == True:
-                    char = ""
                 elif dotFlag == True and mcommentFlag == True:
                     pass
                 elif dotFlag == True:
@@ -370,8 +326,6 @@ def wordCount(file):
                 # equals condition
                 if char == "=" and Qotation == True:
                     pass
-                elif char == "=" and scommentFlag == True:
-                    char = ""
                 elif char == "=" and mcommentFlag == True:
                     pass
                 elif char == "=":
@@ -388,8 +342,6 @@ def wordCount(file):
 
                 if "=" in temp and char != "=" and Qotation == True:
                     pass
-                elif "=" in temp and char != "=" and scommentFlag == True:
-                    char = ""
                 elif "=" in temp and char != "=" and mcommentFlag == True:
                     pass
                 elif "=" in temp and char != "=":
@@ -397,9 +349,7 @@ def wordCount(file):
                     equalCount = 0
                     equalFlag = False
 
-                if scommentFlag == True:
-                    temp = ""
-                elif mcommentFlag == True:
+                if mcommentFlag == True:
                     temp = temp + char
                 else:
                     temp = temp + char
