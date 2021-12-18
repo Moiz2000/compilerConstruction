@@ -58,7 +58,7 @@ def wordCount(file):
         for line in files:             # iterate through lines in file
             for char in line:          # iterate through character in a line
                 # if new line character founded , print temp increase line no by 1 and reset char and temp
-                if char == "\n" and Qotation == False and mcommentFlag == False:
+                if char == "\n" and Qotation == False and mcommentFlag == False and dotFlag == False:
                     if temp != "":
                         printWord(temp)
                         char = ""
@@ -302,6 +302,23 @@ def wordCount(file):
                             dotFlag = True
                             dot = char
                             char = ""
+                    elif temp != "" and dotFlag == True:
+                        if re.fullmatch("([+|-][0-9]+)|([0-9]+)", temp):
+                            dotTemp1 = temp
+                            temp = dotTemp+dot+dotTemp1
+                            printWord(temp)
+                            dotFlag = False
+                            dot = ""
+                            dotTemp = ""
+                            dotTemp1 = ""
+                        else:
+                            printWord(dotTemp)
+                            temp = dot+dotTemp1
+                            printWord(temp)
+                            dotFlag = False
+                            dot = ""
+                            dotTemp = ""
+                            dotTemp1 = ""
                     else:
                         dot = char
                         char = ""
@@ -311,17 +328,51 @@ def wordCount(file):
                     pass
                 elif dotFlag == True and mcommentFlag == True:
                     pass
-                elif dotFlag == True:
-                    if char != "" and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char):
-                        dotTemp1 += char
-                        char = ""
-                    elif char != "":
-                        temp = dotTemp+dot+dotTemp1
-                        printWord(temp)
-                        dotFlag = False
-                        dot = ""
-                        dotTemp = ""
-                        dotTemp1 = ""
+                elif dotFlag == True and char == "\n":
+                    if temp != "" and dotFlag == True:
+                        if re.fullmatch("([+|-][0-9]+)|([0-9]+)", temp):
+                            dotTemp1 = temp
+                            temp = dotTemp+dot+dotTemp1
+                            printWord(temp)
+                            dotFlag = False
+                            dot = ""
+                            dotTemp = ""
+                            dotTemp1 = ""
+                            char = ""
+                            lineNo += 1
+                            addFlag = equalFlag = minusFlag = multiplyFlag = divideFlag = moduloFlag = lessthanFlag = notFlag = greaterthanFlag = orFlag = dotFlag = AndFlag = False
+                        else:
+                            dotTemp1 = temp
+                            if dotTemp != "":
+                                temp = dotTemp
+                                printWord(temp)
+                            temp = dot+dotTemp1
+                            printWord(temp)
+                            dotFlag = False
+                            dot = ""
+                            dotTemp = ""
+                            dotTemp1 = ""
+                            char = ""
+                            lineNo += 1
+                            addFlag = equalFlag = minusFlag = multiplyFlag = divideFlag = moduloFlag = lessthanFlag = notFlag = greaterthanFlag = orFlag = dotFlag = AndFlag = False
+                #     if char != "." and char != "":
+                #         dotTemp1 += char
+                #         char = ""
+                #     if char != "." and line[line.index(char)+1] == "\n":
+                #         if re.fullmatch("([+|-][0-9]+)|([0-9]+)", dotTemp1):
+                #             temp = dotTemp+dot+dotTemp1
+                #             printWord(temp)
+                #             dotFlag = False
+                #             dot = ""
+                #             dotTemp = ""
+                #             dotTemp1 = ""
+                #         else:
+                #             temp = dot+dotTemp1
+                #             printWord(temp)
+                #             dotFlag = False
+                #             dot = ""
+                #             dotTemp = ""
+                #             dotTemp1 = ""
 
                 # equals condition
                 if char == "=" and Qotation == True:

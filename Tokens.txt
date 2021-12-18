@@ -1,90 +1,93 @@
-                 classPart                ValuePart  LineNo
-0           invalid lexeme  "void class ((a_b_c::54       1
-1      Is String Constatnt                   a_b_ca       2
-2            Is Identifier                     safe       3
-3            Is Identifier                     suff       4
-4            Is Identifier                      int       5
-5            Is Identifier                        a       5
-6   Is Relational operator                       ==       5
-7         Is Int Constatnt                       56       5
-8      Is Inc Dec operator                       ++       5
-9     Is compound operator                       -=       5
-10  Is Assignment operator                        =       5
-11        Is Int Constatnt                       75       5
-12              Is Keyword                       if       6
-13           Is punctuator                        (       6
-14           Is punctuator                        (       6
-15           Is Identifier                        a       6
-16  Is Relational operator                        <       6
-17  Is Relational operator                        <       6
-18  Is Relational operator                       <=       6
-19  Is Assignment operator                        =       6
-20     Is Logical operator                        !       6
-21  Is Relational operator                       !=       6
-22  Is Assignment operator                        =       6
-23        Is Int Constatnt                        5       6
-24           Is Identifier                      str       7
-25  Is Assignment operator                        =       7
-26     Is String Constatnt             a bc;+= 56-c       7
-27        Is Int Constatnt                       +7       7
-28           Is Identifier                     char       8
-29           Is Identifier                       ch       8
-30  Is Assignment operator                        =       8
-31     Is String Constatnt                       c        8
-32  Is Airthmatic operator                        +       8
-33          invalid lexeme       "'\n' + '\\n' + '5       8
-34              Is Keyword                   return       9
-35        Is Int Constatnt                       56       9
-36    Is compound operator                       +=       9
-37  Is Assignment operator                        =       9
-38        Is Int Constatnt                       77       9
-39           Is punctuator                        ;       9
-40     Is Inc Dec operator                       --       9
-41     Is Inc Dec operator                       --       9
-42  Is Airthmatic operator                        -       9
-43  Is Airthmatic operator                        *      10
-44    Is compound operator                       *=      10
-45  Is Airthmatic operator                        *      10
-46  Is Airthmatic operator                        /      11
-47    Is compound operator                       /=      11
-48  Is Airthmatic operator                        /      11
-49  Is Airthmatic operator                        %      12
-50    Is compound operator                       %=      12
-51  Is Airthmatic operator                        %      12
-52     Is Logical operator                        !      12
-53  Is Relational operator                       !=      12
-54     Is Logical operator                        !      12
-55  Is Relational operator                        <      13
-56  Is Relational operator                       <=      13
-57  Is Relational operator                        <      13
-58     Is String Constatnt          *%/!= > < -&&||      15
-59     Is Logical operator                       &&      16
-60     Is Logical operator                       ||      16
-61      Is Float Constatnt                       .5      17
-62           Is Identifier                        a      17
-63           Is Identifier                       ab      18
-64     Is Inc Dec operator                       ++      18
-65           Is Identifier                       cd      18
-66      Is Float Constatnt                     99.5      18
-67           Is Identifier                        a      18
-68        Is Int Constatnt                        5      19
-69  Is Airthmatic operator                        -      19
-70        Is Int Constatnt                       +7      19
-71  Is Airthmatic operator                        *      20
-72  Is Airthmatic operator                        /      20
-73  Is Airthmatic operator                        %      20
-74  Is Relational operator                       !=      20
-75  Is Relational operator                        >      20
-76  Is Relational operator                        <      20
-77  Is Relational operator                       <=      20
-78  Is Relational operator                       >=      20
-79  Is Airthmatic operator                        /      21
-80    Is compound operator                       /=      21
-81    Is compound operator                       %=      21
-82    Is compound operator                       *=      21
-83  Is Airthmatic operator                        -      22
-84  Is Airthmatic operator                        +      22
-85        Is Int Constatnt                      -75      23
-86        Is Int Constatnt                      +87      23
-87    Is compound operator                       +=      24
-88    Is compound operator                       -=      24
+         classPart                ValuePart  LineNo
+0   invalid lexeme  "void class ((a_b_c::54       1
+1               SC                   a_b_ca       2
+2               ID                     safe       3
+3               ID                     suff       4
+4               DT                      int       5
+5               ID                        a       5
+6               RO                       ==       5
+7               IC                       56       5
+8           INCDEC                       ++       5
+9              ASO                       -=       5
+10             ASO                        =       5
+11              IC                       75       5
+12              if                       if       6
+13              PN                        (       6
+14              PN                        (       6
+15              ID                        a       6
+16              RO                        <       6
+17              RO                        <       6
+18              RO                       <=       6
+19             ASO                        =       6
+20              LO                        !       6
+21              RO                       !=       6
+22             ASO                        =       6
+23              IC                        5       6
+24              ID                      str       7
+25             ASO                        =       7
+26              SC             a bc;+= 56-c       7
+27              IC                       +7       7
+28              DT                     char       8
+29              ID                       ch       8
+30             ASO                        =       8
+31              SC                       c        8
+32              PM                        +       8
+33  invalid lexeme       "'\n' + '\\n' + '5       8
+34          return                   return       9
+35              IC                       56       9
+36             ASO                       +=       9
+37             ASO                        =       9
+38              IC                       77       9
+39              PN                        ;       9
+40          INCDEC                       --       9
+41          INCDEC                       --       9
+42              PM                        -       9
+43             MDM                        *      10
+44             ASO                       *=      10
+45             MDM                        *      10
+46             MDM                        /      11
+47             ASO                       /=      11
+48             MDM                        /      11
+49             MDM                        %      12
+50             ASO                       %=      12
+51             MDM                        %      12
+52              LO                        !      12
+53              RO                       !=      12
+54              LO                        !      12
+55              RO                        <      13
+56              RO                       <=      13
+57              RO                        <      13
+58              CC                        #      14
+59              RO                        >      14
+60              RO                       >=      14
+61              RO                        >      14
+62              SC          *%/!= > < -&&||      15
+63              LO                       &&      16
+64              LO                       ||      16
+65  invalid lexeme                      .5a      17
+66              ID                       ab      18
+67          INCDEC                       ++      18
+68              ID                       cd      18
+69              IC                       99      18
+70  invalid lexeme                      .5a      18
+71              IC                        5      19
+72              PM                        -      19
+73              IC                       +7      19
+74             MDM                        *      20
+75             MDM                        /      20
+76             MDM                        %      20
+77              RO                       !=      20
+78              RO                        >      20
+79              RO                        <      20
+80              RO                       <=      20
+81              RO                       >=      20
+82             MDM                        /      21
+83             ASO                       /=      21
+84             ASO                       %=      21
+85             ASO                       *=      21
+86              PM                        -      22
+87              PM                        +      22
+88              IC                      -75      23
+89              IC                      +87      23
+90             ASO                       +=      24
+91             ASO                       -=      24
