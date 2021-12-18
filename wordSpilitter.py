@@ -1,7 +1,7 @@
 from regex import *
 import pandas as pd
 
-file = "words.txt"
+#file = "words.txt"
 lineNo = 1    # line no in file
 temp = ""     # store word
 
@@ -40,8 +40,8 @@ def Printing():
     file2.write(str(df))
     file2.close()
     temp = ""
-    print(df)
-
+    # print(df)
+    return df
     # for ind in df.index:
     #     print(df['classPart'][ind])
 
@@ -410,7 +410,5 @@ def wordCount(file):
         else:
             if temp != "":
                 printWord(temp)
-        Printing()
 
-
-wordCount(file)
+    return Printing()
