@@ -1,25 +1,21 @@
-for
-"void class ((a_b_c::54
-"a_b_ca"
-safe
-suff
-int a == 56++ -= =75
-if ((a << <==!!= =5
-str="a bc;+= 56-c"+7
-char ch ="c " + "'\n' + '\\n' + '5
-return 56 +==77; -----
-**= *
-//= /
-% %= % !!=!
-<<= <
-#>>= >
-"*%/!= > < -&&||"
-&& ||
-.5a
-ab++cd 99.5a
-5-+7
-*/%!=><<=>=
-//=%=*=
--+
--75+87
-+=-=
+public class A()
+{
+}
+
+static int Main(string[] args)
+{
+    int a = 5;
+    b = a+b*c;
+}
+
+for (i=1;i<=5;i++)
+{
+    a= b-c;
+}
+
+while(a+b)
+{
+    bad = a-b*c
+}
+
+def 
