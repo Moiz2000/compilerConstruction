@@ -21,7 +21,7 @@ def is_keyword(str):
     elif str in Data_Types:
         return ('DT')
     elif str in Access_Modifier:
-        return ('AM')
+        return str
     elif str in PM:
         return ('PM')
     elif str in relationalOP:
@@ -31,7 +31,7 @@ def is_keyword(str):
     elif str in incdecOP:
         return ('INCDEC')
     elif str in punctuator:
-        return ('PN')
+        return str
     elif str in AS_Operator:
         return ('ASO')
     elif re.fullmatch("(^[^\d\W]\w*\Z)", str):
