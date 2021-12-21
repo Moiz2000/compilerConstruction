@@ -162,8 +162,11 @@ def for_st(Tks):
             I += 1
             if(Tks['classPart'][I] == '('):
                 I += 1
+                print("ab")
                 if(C1(Tks)):
+                    print("abc")
                     if(C2(Tks)):
+                        print("abd")
                         if(Tks['classPart'][I] == ';'):
                             I += 1
                             if(C3(Tks)):
@@ -177,10 +180,12 @@ def for_st(Tks):
 
 def C1(Tks):
     global I
+    print("daba")
     C1_sel = ['int', 'string', 'char', 'float', 'bool', 'super', 'this', 'ID', ';',
               'int_const', 'char_const', 'str_const', 'float_const', '!', '++', '--', '(']
     if(Tks['classPart'][I] in C1_sel):
         if(DEC(Tks)):
+            print("dab a")
             return True
         elif(Assign_st(Tks)):
             return True
@@ -615,11 +620,14 @@ def SST3(Tks):
 
 def DEC(Tks):
     global I
+    print("dbaha")
     DEC_sel = ['char', 'int', 'string', 'bool', 'float', 'ID', 'this', 'super', 'while', 'for', 'if', 'do',
                'break', 'continue', 'try', 'print', 'return', '++', '--', 'def', 'class', 'static', 'public', 'private']
     if(Tks['classPart'][I] in DEC_sel):
         if(DT(Tks)):
+            print("lk")
             if(Tks['classPart'][I] == 'ID'):
+                print("dba")
                 I += 1
                 if(Init(Tks)):
                     if(List(Tks)):
@@ -631,9 +639,11 @@ def DEC(Tks):
 def Init(Tks):
     global I
     Init_sel = ['=', ';', ',', '+=', '-=', '*=', '/=', '%=', '--', '++', ')']
+    print("poties1")
     if(Tks['classPart'][I] in Init_sel):
         if(Tks['classPart'][I] == '='):
             I += 1
+            print("poties")
             if(OE(Tks)):
                 return True
     else:
@@ -1023,6 +1033,7 @@ def Constructor(Tks):
 
 
 def DT(Tks):
+    print("po")
     global I
     datatype_sel = ['char', 'string', 'int',
                     'bool', 'float', 'ID', 'main', '[']
@@ -1042,6 +1053,7 @@ def DT(Tks):
         elif(Tks['classPart'][I] == 'bool'):
             I += 1
             return True
+        return True
     else:
         return False
 
@@ -1085,9 +1097,11 @@ def P2(Tks):
 
 
 def OE(Tks):
-    OE_sel = ['super', 'this', 'ID', 'while', 'for', 'do', 'if', 'return', 'print', 'int_const', 'char_const',
+    print("poti")
+    OE_sel = ['super', 'this', 'ID', 'while', 'for', 'do', 'if', 'return', 'print', 'IC', 'char_const',
               'str_const', 'float_const', '!', '++', '--', '(', ')', ';', 'char', 'int', 'string', 'bool', 'float']
     if(Tks['classPart'][I] in OE_sel):
+        print("talha")
         if(AE(Tks)):
             if(OE1(Tks)):
                 return True

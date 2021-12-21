@@ -17,23 +17,23 @@ def is_keyword(str):
     if str in keyword:
         return (str)
     elif str in MDM:
-        return ('MDM')
+        return str
     elif str in Data_Types:
-        return ('DT')
+        return str
     elif str in Access_Modifier:
         return str
     elif str in PM:
-        return ('PM')
+        return str
     elif str in relationalOP:
-        return ('RO')
+        return str
     elif str in logicalOp:
-        return ('LO')
+        return str
     elif str in incdecOP:
-        return ('INCDEC')
+        return str
     elif str in punctuator:
         return str
     elif str in AS_Operator:
-        return ('ASO')
+        return str
     elif re.fullmatch("(^[^\d\W]\w*\Z)", str):
         return ('ID')
     elif(re.fullmatch("([+|-][0-9]+)|([0-9]+)", str)):
