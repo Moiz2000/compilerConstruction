@@ -14,7 +14,6 @@ def Syntax_Analyzer(Tokens):
 # check for dot
 def Start(Tks):
     global I
-
     Start_selection = ['int', 'string', 'float', 'char', 'bool', 'ID', 'this', 'super', 'while', 'for', 'if', 'do',
                        'break', 'continue', 'try', 'print', 'return', 'INCDEC', 'def', 'public', 'private', 'class', 'static', '$']
 
@@ -641,8 +640,6 @@ def Init(Tks):
             I += 1
             if(OE(Tks)):
                 return True
-            return True
-        return True
     else:
         return False
 
@@ -677,18 +674,22 @@ def BR(Tks):
             I += 1
             if(BR(Tks)):
                 return True
+            return True
     else:
         return False
 
 
 def A1(Tks):
     global I
-    if(Tks['classPart'][I] == 'new'):
+    if(Tks['classPart'][I] == '='):
         I += 1
-        if(DT(Tks)):
-            if(BR1(Tks)):
-                if(Tks['classPart'][I] == ';'):
-                    return True
+        if(Tks['classPart'][I] == 'new'):
+            I += 1
+            if(DT(Tks)):
+                if(BR1(Tks)):
+                    if(Tks['classPart'][I] == ';'):
+                        I += 1
+                        return True
     else:
         return False
 
@@ -702,6 +703,7 @@ def BR1(Tks):
                 I += 1
                 if(BR1(Tks)):
                     return True
+                return True
     else:
         return False
 
@@ -709,7 +711,9 @@ def BR1(Tks):
 
 
 def IP(Tks):
+    global I
     if(Tks['classPart'][I] == 'IC'):  # Check this ?
+        I += 1
         return True
     else:
         return False
@@ -803,12 +807,11 @@ def FuncDec(Tks):
                     I += 1
                     if(Tks['classPart'][I] == '('):
                         I += 1
-                    if(Parameter(Tks)):
-                        I += 1
-                        if(Tks['classPart'][I] == ')'):
-                            I += 1
-                            if(Body(Tks)):
-                                return True
+                        if(Parameter(Tks)):
+                            if(Tks['classPart'][I] == ')'):
+                                I += 1
+                                if(Body(Tks)):
+                                    return True
     else:
         return False
 
@@ -954,7 +957,6 @@ def C_FuncDecl(Tks):
                       'float', 'bool', 'public', 'private', 'protected', '}']
     if(Tks['classPart'][I] in C_Funcdecl_sel):
         if(AM(Tks)):
-            print("abc")
             if(Tks['classPart'][I] == 'def'):
                 I += 1
                 if(RT(Tks)):
@@ -994,7 +996,6 @@ def F_body(Tks):
             if(F_MST(Tks)):
                 if(Tks['classPart'][I] == '}'):
                     return True
-                return True
     else:
         return False
 
@@ -1103,7 +1104,6 @@ def DT(Tks):
         elif(Tks['classPart'][I] == 'bool'):
             I += 1
             return True
-        return True
     else:
         return False
 
@@ -1117,7 +1117,7 @@ def Parameter(Tks):
                 I += 1
                 if(P1(Tks)):
                     return True
-                return True
+        return True
     else:
         return False
 
@@ -1153,7 +1153,6 @@ def OE(Tks):
         if(AE(Tks)):
             if(OE1(Tks)):
                 return True
-            return True
     else:
         return False
 
@@ -1165,7 +1164,6 @@ def OE1(Tks):
         if(AE(Tks)):
             if(OE1(Tks)):
                 return True
-            return True
     else:
         return False
 
@@ -1174,7 +1172,6 @@ def AE(Tks):
     if(RE(Tks)):
         if(AE1(Tks)):
             return True
-        return True
     else:
         return False
 
@@ -1275,7 +1272,6 @@ def T(Tks):
     if(F(Tks)):
         if(T1(Tks)):
             return True
-        return True
     else:
         return False
 
@@ -1364,7 +1360,6 @@ def Body(Tks):
             if(MST(Tks)):
                 if(Tks['classPart'][I] == '}'):
                     return True
-                return True
     else:
         return False
 
