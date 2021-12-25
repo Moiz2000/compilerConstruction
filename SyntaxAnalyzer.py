@@ -35,8 +35,6 @@ def Start(Tks):
             if(Start(Tks)):
                 return True
             return True
-        elif(Tks['classPart'][I] == '$'):
-            return True
         else:
             return False
 
@@ -51,7 +49,6 @@ def SST(Tks):
         if(DT(Tks)):
             if(SST1(Tks)):
                 return True
-            return True
         elif(Tks['classPart'][I] == 'ID'):
             I += 1
             if(SST2(Tks)):
@@ -162,11 +159,8 @@ def for_st(Tks):
             I += 1
             if(Tks['classPart'][I] == '('):
                 I += 1
-                print("ab")
                 if(C1(Tks)):
-                    print("abc")
                     if(C2(Tks)):
-                        print("abd")
                         if(Tks['classPart'][I] == ';'):
                             I += 1
                             if(C3(Tks)):
@@ -180,12 +174,10 @@ def for_st(Tks):
 
 def C1(Tks):
     global I
-    print("daba")
     C1_sel = ['int', 'string', 'char', 'float', 'bool', 'super', 'this', 'ID', ';',
-              'int_const', 'char_const', 'str_const', 'float_const', '!', '++', '--', '(']
+              'IC', 'CC', 'SC', 'FC', '!', '++', '--', '(']
     if(Tks['classPart'][I] in C1_sel):
         if(DEC(Tks)):
-            print("dab a")
             return True
         elif(Assign_st(Tks)):
             return True
@@ -196,8 +188,8 @@ def C1(Tks):
 
 
 def C2(Tks):
-    C2_sel = ['ID', ';', 'int_const', 'char_const',
-              'str_const', 'float_const', '!', '++', '--', '(']
+    C2_sel = ['ID', ';', 'IC', 'CC',
+              'SC', 'FC', '!', '++', '--', '(']
     if(Tks['classPart'][I] in C2_sel):
         if(OE(Tks)):
             return True
@@ -209,18 +201,22 @@ def C3(Tks):
     global I
     C3_sel = ['++', '--', 'super', 'this', 'ID', ')']
     if(Tks['classPart'][I] in C3_sel):
-        if(INCDECOP(Tks)):
-            if(TS(Tks)):
-                if(Tks['classPart'][I] == 'ID'):
-                    I += 1
-                    if(R(Tks)):
-                        return True
-        elif(TS(Tks)):
+        if(TS(Tks)):
             if(Tks['classPart'][I] == 'ID'):
                 I += 1
                 if(R(Tks)):
                     if(SST3(Tks)):
                         return True
+                    return True
+                return True
+        elif(INCDECOP(Tks)):
+            if(TS(Tks)):
+                if(Tks['classPart'][I] == 'ID'):
+                    I += 1
+                    if(R(Tks)):
+                        return True
+                return True
+            return True
     else:
         return False
 
@@ -228,7 +224,7 @@ def C3(Tks):
 def Assign_st(Tks):
     global I
     assign_st_sel = ['char', 'int', 'string', 'bool', 'float', 'ID', 'this', 'super',
-                     'int_const', 'string_const', 'char_const', 'float_const', '!', '++', '--', ';', '(']
+                     'IC', 'SC', 'CC', 'FC', '!', '++', '--', ';', '(']
     if(Tks['classPart'][I] in assign_st_sel):
         if(TS(Tks)):
             if(Tks['classPart'][I] == 'ID'):
@@ -499,8 +495,10 @@ def return_st(Tks):
 def INCDECOP(Tks):
     global I
     if(Tks['classPart'][I] == '++'):
+        I += 1
         return True
     elif(Tks['classPart'][I] == '--'):
+        I += 1
         return True
     else:
         return False
@@ -508,13 +506,16 @@ def INCDECOP(Tks):
 
 def R(Tks):
     global I
-    if(Tks['classPart'][I] == '.'):
-        I += 1
-        if(Tks['classPart'][I] == 'ID'):
+    R_sel = ['.ID', '+=', '-=', '*=', '/=', '%=', '=', '++', '--', ';', ')']
+    if(Tks['classPart'][I] in R_sel):
+        if(Tks['classPart'][I] == '.'):
             I += 1
-            if(Ref(Tks)):
-                if(Init(Tks)):
-                    return True
+            if(Tks['classPart'][I] == 'ID'):
+                I += 1
+                if(Ref(Tks)):
+                    if(Init(Tks)):
+                        return True
+        return True
     else:
         return False
 
@@ -561,13 +562,11 @@ def SST1(Tks):
         if(Init(Tks)):
             if(List(Tks)):
                 return True
-        return True
     elif(BR(Tks)):
         if(Tks['classPart'][I] == 'ID'):
             I += 1
             if(A1(Tks)):
                 return True
-            return True
     else:
         return False
 
@@ -579,7 +578,7 @@ def SST2(Tks):
         if(Parameter1(Tks)):
             if(Tks['classPart'][I] == ')'):
                 return True
-            return True
+        return True
     elif(R(Tks)):
         if(SST3(Tks)):
             return True
@@ -612,6 +611,7 @@ def SST3(Tks):
     elif(INCDECOP(Tks)):
         if(Tks['classPart'][I] == ';'):
             return True
+        return True
     else:
         return False
 
@@ -620,14 +620,11 @@ def SST3(Tks):
 
 def DEC(Tks):
     global I
-    print("dbaha")
     DEC_sel = ['char', 'int', 'string', 'bool', 'float', 'ID', 'this', 'super', 'while', 'for', 'if', 'do',
                'break', 'continue', 'try', 'print', 'return', '++', '--', 'def', 'class', 'static', 'public', 'private']
     if(Tks['classPart'][I] in DEC_sel):
         if(DT(Tks)):
-            print("lk")
             if(Tks['classPart'][I] == 'ID'):
-                print("dba")
                 I += 1
                 if(Init(Tks)):
                     if(List(Tks)):
@@ -639,13 +636,13 @@ def DEC(Tks):
 def Init(Tks):
     global I
     Init_sel = ['=', ';', ',', '+=', '-=', '*=', '/=', '%=', '--', '++', ')']
-    print("poties1")
     if(Tks['classPart'][I] in Init_sel):
         if(Tks['classPart'][I] == '='):
             I += 1
-            print("poties")
             if(OE(Tks)):
                 return True
+            return True
+        return True
     else:
         return False
 
@@ -653,9 +650,10 @@ def Init(Tks):
 def List(Tks):
     global I
     List_sel = [';', ',', 'private', 'public', 'protected', 'int', 'char', 'string', 'bool', 'float', 'def', 'ID', 'super', 'this', 'while',
-                'for', 'if', 'return', 'print', 'break', 'continue', 'try', '++', '--', 'int_const', 'char_const', 'float_const', 'string_const', '!', '(']
+                'for', 'if', 'return', 'print', 'break', 'continue', 'try', '++', '--', 'IC', 'CC', 'FC', 'SC', '!', '(']
     if(Tks['classPart'][I] in List_sel):
         if(Tks['classPart'][I] == ';'):
+            I += 1
             return True
         elif(Tks['classPart'][I] == ','):
             I += 1
@@ -664,6 +662,9 @@ def List(Tks):
                 if(Init(Tks)):
                     if(List(Tks)):
                         return True
+                return True
+        else:
+            return False
     else:
         return False
 
@@ -708,23 +709,53 @@ def BR1(Tks):
 
 
 def IP(Tks):
-    if(Tks['classPart'][I] == 'int_const'):  # Check this ?
+    if(Tks['classPart'][I] == 'IC'):  # Check this ?
         return True
     else:
         return False
+
+# For Fun_call / Arguments
+
+# c
 
 
 def Parameter1(Tks):
-    if(Tks['classPart'][I] == 'int_const'):
-        return True
-    elif(Tks['classPart'][I] == 'char_const'):
-        return True
-    elif(Tks['classPart'][I] == 'float_const'):
-        return True
-    elif(Tks['classPart'][I] == 'string_const'):
+    if(Const(Tks)):
+        if(Const1(Tks)):
+            return True
         return True
     else:
         return False
+
+
+def Const(Tks):
+    global I
+    if(Tks['classPart'][I] == 'IC'):
+        I += 1
+        return True
+    elif(Tks['classPart'][I] == 'CC'):
+        I += 1
+        return True
+    elif(Tks['classPart'][I] == 'FC'):
+        I += 1
+        return True
+    elif(Tks['classPart'][I] == 'SC'):
+        I += 1
+        return True
+    else:
+        return False
+
+
+def Const1(Tks):
+    global I
+    if(Tks['classPart'][I] == ','):
+        I += 1
+        if(Parameter1(Tks)):
+            return True
+        return True
+    else:
+        return False
+# c
 
 
 def Assign_Op(Tks):
@@ -746,10 +777,15 @@ def Assign_Op(Tks):
 
 # dot problem
 def TS(Tks):
+    TS_sel = ['ID', 'this', 'super']
     global I
-    if(Tks['classPart'][I] == 'this'):
-        return True
-    elif (Tks['classPart'][I] == 'super'):
+    if Tks['classPart'][I] in TS_sel:
+        if(Tks['classPart'][I] == 'this'):
+            I += 1
+            return True
+        elif (Tks['classPart'][I] == 'super'):
+            I += 1
+            return True
         return True
     else:
         return False
@@ -773,7 +809,8 @@ def FuncDec(Tks):
                             I += 1
                             if(Body(Tks)):
                                 return True
-    return False
+    else:
+        return False
 
 
 def ClassDec(Tks):
@@ -798,12 +835,15 @@ def ClassDec(Tks):
 
 
 def C_AM(Tks):
+    C_AM_sel = ['public', 'private', 'class']
     global I
-    if(Tks['classPart'][I] == 'public'):
-        I += 1
-        return True
-    elif(Tks['classPart'][I] == 'private'):
-        I += 1
+    if Tks['classPart'][I] in C_AM_sel:
+        if(Tks['classPart'][I] == 'public'):
+            I += 1
+            return True
+        elif(Tks['classPart'][I] == 'private'):
+            I += 1
+            return True
         return True
     else:
         return False
@@ -812,11 +852,11 @@ def C_AM(Tks):
 def inh(Tks):
     global I
     inh_sel = ['extends', ';', '{']
-
     if(Tks['classPart'][I] in inh_sel):
         if(Tks['classPart'][I] == 'extends'):
             I += 1
             if(Tks['classPart'][I] == 'ID'):
+                I += 1
                 return True
         return True
     else:
@@ -835,7 +875,6 @@ def C_body(Tks):
             I += 1
             if(C_MST(Tks)):
                 if(Tks['classPart'][I] == '}'):
-                    I += 1
                     return True
                 return True
     else:
@@ -843,13 +882,14 @@ def C_body(Tks):
 
 
 def C_MST(Tks):
+    global I
     C_MST_sel = ['def', 'ID', 'int', 'string', 'char',
                  'float', 'bool', 'public', 'private', 'protected', '}']
     if(Tks['classPart'][I] in C_MST_sel):
         if(C_SST(Tks)):
-            if(C_MST(Tks)):
-                return True
-        return True
+            # if(C_MST(Tks)):
+            #     return True
+            return True
     else:
         return False
 
@@ -867,10 +907,12 @@ def C_SST(Tks):
             return True
         elif(Constructor(Tks)):
             return True
+        return True
     else:
         return False
 
 
+# Decl inside class
 def C_Decl(Tks):
     global I
     C_Decl_sel = ['def', 'ID', 'int', 'string', 'char',
@@ -889,11 +931,18 @@ def C_Decl(Tks):
 
 
 def AM(Tks):
-    if(Tks['classPart'][I] == 'public'):
-        return True
-    elif(Tks['classPart'][I] == 'private'):
-        return True
-    elif(Tks['classPart'][I] == 'protected'):
+    AM_sel = ['public', 'private', 'protected']
+    global I
+    if Tks['classPart'][I] in AM_sel:
+        if(Tks['classPart'][I] == 'public'):
+            I += 1
+            return True
+        elif(Tks['classPart'][I] == 'private'):
+            I += 1
+            return True
+        elif(Tks['classPart'][I] == 'protected'):
+            I += 1
+            return True
         return True
     else:
         return False
@@ -905,7 +954,9 @@ def C_FuncDecl(Tks):
                       'float', 'bool', 'public', 'private', 'protected', '}']
     if(Tks['classPart'][I] in C_Funcdecl_sel):
         if(AM(Tks)):
+            print("abc")
             if(Tks['classPart'][I] == 'def'):
+                I += 1
                 if(RT(Tks)):
                     if(Tks['classPart'][I] == 'ID'):
                         I += 1
@@ -1033,7 +1084,6 @@ def Constructor(Tks):
 
 
 def DT(Tks):
-    print("po")
     global I
     datatype_sel = ['char', 'string', 'int',
                     'bool', 'float', 'ID', 'main', '[']
@@ -1065,10 +1115,9 @@ def Parameter(Tks):
         if(DT(Tks)):
             if(Tks['classPart'][I] == 'ID'):
                 I += 1
+                if(P1(Tks)):
+                    return True
                 return True
-            if(P1(Tks)):
-                return True
-            return True
     else:
         return False
 
@@ -1082,8 +1131,8 @@ def P1(Tks):
             if(P2(Tks)):
                 return True
             return True
-
-    return False
+    else:
+        return False
 
 
 def P2(Tks):
@@ -1093,15 +1142,14 @@ def P2(Tks):
         if(Parameter(Tks)):
             return True
         return True
-    return False
+    else:
+        return False
 
 
 def OE(Tks):
-    print("poti")
-    OE_sel = ['super', 'this', 'ID', 'while', 'for', 'do', 'if', 'return', 'print', 'IC', 'char_const',
-              'str_const', 'float_const', '!', '++', '--', '(', ')', ';', 'char', 'int', 'string', 'bool', 'float']
+    OE_sel = ['super', 'this', 'ID', 'while', 'for', 'do', 'if', 'return', 'print', 'IC', 'CC',
+              'SC', 'FC', '!', '++', '--', '(', ')', ';', 'char', 'int', 'string', 'bool', 'float']
     if(Tks['classPart'][I] in OE_sel):
-        print("talha")
         if(AE(Tks)):
             if(OE1(Tks)):
                 return True
@@ -1111,11 +1159,13 @@ def OE(Tks):
 
 
 def OE1(Tks):
+    global I
     if(Tks['classPart'][I] == '||'):
+        I += 1
         if(AE(Tks)):
             if(OE1(Tks)):
                 return True
-#            return True
+            return True
     else:
         return False
 
@@ -1124,7 +1174,7 @@ def AE(Tks):
     if(RE(Tks)):
         if(AE1(Tks)):
             return True
-    #    return True
+        return True
     else:
         return False
 
@@ -1133,18 +1183,19 @@ def RE(Tks):
     if(E(Tks)):
         if(RE1(Tks)):
             return True
-     #   return True
+        return True
     else:
         return False
 
 
 def AE1(Tks):
+    global I
     if(Tks['classPart'][I] == '&&'):
+        I += 1
         if(RE(Tks)):
             if(AE1(Tks)):
                 return True
             return True
-      #  return True
     else:
         return False
 
@@ -1153,7 +1204,7 @@ def E(Tks):
     if(T(Tks)):
         if(E1(Tks)):
             return True
-       # return True
+        return True
     else:
         return False
 
@@ -1163,31 +1214,58 @@ def RE1(Tks):
         if(E(Tks)):
             if(RE1(Tks)):
                 return True
-         #   return True
-        # return True
+        return True
     else:
         return False
 
 
 def REO(Tks):
-    pass
+    global I
+    relationalOP = ['<', '>', '<=', '>=', '!=', '==']
+    if(Tks['classPart'][I] == '<'):
+        I += 1
+        return True
+    elif(Tks['classPart'][I] == '>'):
+        I += 1
+        return True
+    elif(Tks['classPart'][I] == '<='):
+        I += 1
+        return True
+    elif(Tks['classPart'][I] == '>='):
+        I += 1
+        return True
+    elif(Tks['classPart'][I] == '!='):
+        I += 1
+        return True
+    elif(Tks['classPart'][I] == '=='):
+        I += 1
+        return True
+    else:
+        return False
 
 
 def PM(Tks):
+    global I
     if(Tks['classPart'][I] == '+'):
+        I += 1
         return True
     elif(Tks['classPart'][I] == '-'):
+        I += 1
         return True
     else:
         return False
 
 
 def MDM(Tks):
+    global I
     if(Tks['classPart'][I] == '*'):
+        I += 1
         return True
     elif(Tks['classPart'][I] == '/'):
+        I += 1
         return True
     elif(Tks['classPart'][I] == '%'):
+        I += 1
         return True
     else:
         return False
@@ -1207,7 +1285,6 @@ def E1(Tks):
         if(T(Tks)):
             if(E1(Tks)):
                 return True
-            return True
         return True
     else:
         return False
@@ -1218,7 +1295,6 @@ def T1(Tks):
         if(F(Tks)):
             if(T1(Tks)):
                 return True
-            return True
         return True
     else:
         return False
@@ -1230,7 +1306,10 @@ def F(Tks):
         I += 1
         if(F1(Tks)):
             return True
-    elif(Const(Tks)):
+        return True
+    elif(Tks['classPart'][I] == 'IC' or Tks['classPart'][I] == 'CC' or Tks['classPart'][I] == 'SC'):
+        if(Const(Tks)):
+            return True
         return True
     elif(Tks['classPart'][I] == '!'):
         I += 1
@@ -1249,28 +1328,27 @@ def F(Tks):
         if(OE(Tks)):
             if(Tks['classPart'][I] == ')'):
                 return True
-            return True
+            # return True
     else:
         return False
 
 
 def F1(Tks):
     global I
-    if(Tks['classPart'][I] == '('):
-        I += 1
-        if(Parameter1(Tks)):
-            if(Tks['classPart'][I] == ')'):
+    F1_sel = ['ID', '(']
+    if(Tks['classPart'][I] in F1_sel):
+        if(Tks['classPart'][I] == '('):
+            I += 1
+            if(Parameter1(Tks)):
+                if(Tks['classPart'][I] == ')'):
+                    return True
+            return True
+        elif(R(Tks)):
+            if(INCDECOP(Tks)):
                 return True
-            return True
-    elif(R(Tks)):
-        if(INCDECOP(Tks)):
-            return True
+        return True
     else:
         return False
-
-
-def Const(Tks):
-    pass
 
 
 def Body(Tks):
@@ -1279,6 +1357,7 @@ def Body(Tks):
                 'break', 'continue', 'try', 'print', 'return', 'INCDEC', 'else', 'def', 'class', 'static', '$']
     if(Tks['classPart'][I] in body_sel):
         if(Tks['classPart'][I] == ';'):
+            I += 1
             return True
         elif(Tks['classPart'][I] == '{'):
             I += 1
@@ -1301,8 +1380,7 @@ def MST(Tks):
         if(SST(Tks)):
             if(MST(Tks)):
                 return True
-            return True
-
+        return True
     else:
         return False
 
