@@ -34,6 +34,8 @@ def is_keyword(str):
         return str
     elif str in AS_Operator:
         return str
+    elif str == "$":
+        return str
     elif re.fullmatch("(^[^\d\W]\w*\Z)", str):
         return ('ID')
     elif(re.fullmatch("([+|-][0-9]+)|([0-9]+)", str)):
