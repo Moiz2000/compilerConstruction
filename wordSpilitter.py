@@ -28,7 +28,7 @@ def printWord(string):
 def Printing():
 
     global classPart, ValuePart, line
-    file2 = open("Tokens.txt", "a")
+    file2 = open("Tokens.txt", "w")
 
     data = {
         "classPart": classPart,
@@ -143,16 +143,23 @@ def wordCount(file):
                 elif char == "+" and mcommentFlag == True:
                     pass
                 elif char == "+":
+                    print("ab")
                     addCount += 1
                     if temp != "" and addFlag == False:
                         printWord(temp)
                     addFlag = True
-                    if temp != "" and addCount == 2:
+                    if temp == "+" and addCount == 2:
+                        print("abcd")
                         addCount = 0
                         addFlag = False
                         temp = temp+char
                         printWord(temp)
                         char = ""
+                    elif temp != "" and addCount == 2:
+                        printWord(temp)
+                        print("abcdef")
+                        addCount = 0
+                        addFlag = False
 
                 # minus condition
                 if char == "-" and Qotation == True:
@@ -164,12 +171,18 @@ def wordCount(file):
                     if temp != "" and minusFlag == False:
                         printWord(temp)
                     minusFlag = True
-                    if temp != "" and minusCount == 2:
+                    if temp == "-" and minusCount == 2:
+                        print("abcd")
                         minusCount = 0
                         minusFlag = False
                         temp = temp+char
                         printWord(temp)
                         char = ""
+                    elif temp != "" and minusCount == 2:
+                        printWord(temp)
+                        print("abcdef")
+                        minusCount = 0
+                        minusFlag = False
 
                 if temp in PlusMinus and char == "=" and Qotation == True:
                     pass
@@ -184,28 +197,36 @@ def wordCount(file):
                     minusFlag = False
                     char = ""
 
-                if temp in PlusMinus and char != "" and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) and Qotation == True:
+                if temp in PlusMinus and char != "" and Qotation == True:
                     pass
-                elif temp in PlusMinus and char != "" and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) and mcommentFlag == True:
+                elif temp in PlusMinus and char != "" and mcommentFlag == True:
                     pass
-                elif temp in PlusMinus and char != "" and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) == False:
-                    printWord(temp)
-                    addCount = 0
-                    addFlag = False
-                    minusCount = 0
-                    minusFlag = False
-                    char = ""
+                elif temp in PlusMinus and char != "":
+                    if re.fullmatch("(^[^\d\W]\w*\Z)", char):
+                        print("jks")
+                        printWord(temp)
+                        addCount = 0
+                        addFlag = False
+                        minusCount = 0
+                        minusFlag = False
+                # elif temp in PlusMinus and char != "" and re.fullmatch("(^[^\d\W]\w*\Z)", char) == False:
+                #     print("tks")
+                #     printWord(temp)
+                #     addCount = 0
+                #     addFlag = False
+                #     minusCount = 0
+                #     minusFlag = False
 
-                if temp in PlusMinus and char != "=" and Qotation == True and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) == False:
-                    pass
-                elif temp in PlusMinus and char != "=" and mcommentFlag == True and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) == False:
-                    pass
-                elif temp in PlusMinus and char != "=" and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) == False:
-                    printWord(temp)
-                    addCount = 0
-                    addFlag = False
-                    minusCount = 0
-                    minusFlag = False
+                # if temp in PlusMinus and char != "=" and Qotation == True and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) == False:
+                #     pass
+                # elif temp in PlusMinus and char != "=" and mcommentFlag == True and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) == False:
+                #     pass
+                # elif temp in PlusMinus and char != "=" and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) == False:
+                #     printWord(temp)
+                #     addCount = 0
+                #     addFlag = False
+                #     minusCount = 0
+                #     minusFlag = False
 
                 # operator conditions
                 if char in operator and Qotation == True:
@@ -404,11 +425,13 @@ def wordCount(file):
                     temp = temp + char
                 else:
                     temp = temp + char
+                    print(temp, "tm")
 
         if mcommentFlag == True:
             printWord(temp)
         else:
             if temp != "":
                 printWord(temp)
-
+    temp = "$"
+    printWord(temp)
     return Printing()
