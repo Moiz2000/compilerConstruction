@@ -1,3 +1,4 @@
+from enum import Flag
 from regex import *
 import pandas as pd
 
@@ -143,13 +144,11 @@ def wordCount(file):
                 elif char == "+" and mcommentFlag == True:
                     pass
                 elif char == "+":
-                    print("ab")
                     addCount += 1
                     if temp != "" and addFlag == False:
                         printWord(temp)
                     addFlag = True
                     if temp == "+" and addCount == 2:
-                        print("abcd")
                         addCount = 0
                         addFlag = False
                         temp = temp+char
@@ -157,7 +156,6 @@ def wordCount(file):
                         char = ""
                     elif temp != "" and addCount == 2:
                         printWord(temp)
-                        print("abcdef")
                         addCount = 0
                         addFlag = False
 
@@ -172,7 +170,6 @@ def wordCount(file):
                         printWord(temp)
                     minusFlag = True
                     if temp == "-" and minusCount == 2:
-                        print("abcd")
                         minusCount = 0
                         minusFlag = False
                         temp = temp+char
@@ -180,7 +177,6 @@ def wordCount(file):
                         char = ""
                     elif temp != "" and minusCount == 2:
                         printWord(temp)
-                        print("abcdef")
                         minusCount = 0
                         minusFlag = False
 
@@ -203,30 +199,11 @@ def wordCount(file):
                     pass
                 elif temp in PlusMinus and char != "":
                     if re.fullmatch("(^[^\d\W]\w*\Z)", char):
-                        print("jks")
                         printWord(temp)
                         addCount = 0
                         addFlag = False
                         minusCount = 0
                         minusFlag = False
-                # elif temp in PlusMinus and char != "" and re.fullmatch("(^[^\d\W]\w*\Z)", char) == False:
-                #     print("tks")
-                #     printWord(temp)
-                #     addCount = 0
-                #     addFlag = False
-                #     minusCount = 0
-                #     minusFlag = False
-
-                # if temp in PlusMinus and char != "=" and Qotation == True and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) == False:
-                #     pass
-                # elif temp in PlusMinus and char != "=" and mcommentFlag == True and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) == False:
-                #     pass
-                # elif temp in PlusMinus and char != "=" and re.fullmatch("([+|-][0-9]+)|([0-9]+)", char) == False:
-                #     printWord(temp)
-                #     addCount = 0
-                #     addFlag = False
-                #     minusCount = 0
-                #     minusFlag = False
 
                 # operator conditions
                 if char in operator and Qotation == True:
@@ -329,17 +306,17 @@ def wordCount(file):
                             temp = dotTemp+dot+dotTemp1
                             printWord(temp)
                             dotFlag = False
-                            dot = ""
-                            dotTemp = ""
-                            dotTemp1 = ""
+                            dot = dotTemp = dotTemp1 = ""
                         else:
-                            printWord(dotTemp)
-                            temp = dot+dotTemp1
+                            if dot != "":
+                                i = temp
+                                temp = dot
+                                printWord(temp)
+                                temp = i
                             printWord(temp)
-                            dotFlag = False
-                            dot = ""
-                            dotTemp = ""
-                            dotTemp1 = ""
+                            dotFlag = True
+                            dot = char
+                            char = ""
                     else:
                         dot = char
                         char = ""
@@ -355,45 +332,19 @@ def wordCount(file):
                             dotTemp1 = temp
                             temp = dotTemp+dot+dotTemp1
                             printWord(temp)
-                            dotFlag = False
-                            dot = ""
-                            dotTemp = ""
-                            dotTemp1 = ""
-                            char = ""
+                            dot = dotTemp = dotTemp1 = char = ""
                             lineNo += 1
                             addFlag = equalFlag = minusFlag = multiplyFlag = divideFlag = moduloFlag = lessthanFlag = notFlag = greaterthanFlag = orFlag = dotFlag = AndFlag = False
                         else:
-                            dotTemp1 = temp
-                            if dotTemp != "":
-                                temp = dotTemp
+                            if dot != "":
+                                i = temp
+                                temp = dot
                                 printWord(temp)
-                            temp = dot+dotTemp1
+                                temp = i
                             printWord(temp)
-                            dotFlag = False
-                            dot = ""
-                            dotTemp = ""
-                            dotTemp1 = ""
-                            char = ""
+                            dot = dotTemp = dotTemp1 = char = ""
                             lineNo += 1
                             addFlag = equalFlag = minusFlag = multiplyFlag = divideFlag = moduloFlag = lessthanFlag = notFlag = greaterthanFlag = orFlag = dotFlag = AndFlag = False
-                #     if char != "." and char != "":
-                #         dotTemp1 += char
-                #         char = ""
-                #     if char != "." and line[line.index(char)+1] == "\n":
-                #         if re.fullmatch("([+|-][0-9]+)|([0-9]+)", dotTemp1):
-                #             temp = dotTemp+dot+dotTemp1
-                #             printWord(temp)
-                #             dotFlag = False
-                #             dot = ""
-                #             dotTemp = ""
-                #             dotTemp1 = ""
-                #         else:
-                #             temp = dot+dotTemp1
-                #             printWord(temp)
-                #             dotFlag = False
-                #             dot = ""
-                #             dotTemp = ""
-                #             dotTemp1 = ""
 
                 # equals condition
                 if char == "=" and Qotation == True:
@@ -425,12 +376,17 @@ def wordCount(file):
                     temp = temp + char
                 else:
                     temp = temp + char
-                    print(temp, "tm")
 
         if mcommentFlag == True:
             printWord(temp)
         else:
-            if temp != "":
+            if temp != "" and dotFlag == True:
+                i = temp
+                temp = dot
+                printWord(temp)
+                temp = i
+                printWord(temp)
+            elif temp != "":
                 printWord(temp)
     temp = "$"
     printWord(temp)
